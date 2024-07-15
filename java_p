@@ -1,0 +1,79 @@
+import java.util.Scanner;
+
+public class mamalucyshop {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String password = "M@MaLuc1";
+        int maxAttempts = 3;
+        int attempts = 0;
+
+
+        String[] products = {"Maize Flour", "Wheat Flour", "Rice", "Dengu", "Beans"};
+        double[] prices = {180, 240, 150, 170, 130};
+        String[] codes = {"001", "002", "003", "004", "005"};
+
+
+        double totalBeforeTax = 0;
+        double totalAfterTax = 0;
+
+
+        while (attempts < maxAttempts) {
+            System.out.print("Enter password: ");
+            String inputPassword = scanner.nextLine();
+            if (inputPassword.equals(password)) {
+                break;
+            } else {
+                attempts++;
+                System.out.println("Incorrect password⚠⚠" + (maxAttempts - attempts));
+            }
+        }
+
+        if (attempts == maxAttempts) {
+            System.out.println("CAUTION! YOU HAVE REACHED MAXIMUM ATTEMPTS");
+            System.exit(0);
+        }
+
+
+        System.out.println("--WELCOME TO MAMA LUCY SHOP--*");
+        System.out.println("_CODE_______________________PRODUCTS_____________________________PRICE");
+        System.out.println("_");
+        for (int i = 0; i < products.length; i++) {
+
+            System.out.printf("  %sCode                  %s -                     %.2f Ksh        %n",codes[i], products[i], prices[i]);
+            System.out.println("_________________________________________________________________________ ");
+        }
+
+
+        while (true) {
+            System.out.print("Enter product code (E to exit): ");
+            String productCode = scanner.nextLine();
+            if (productCode.equalsIgnoreCase("E")) {
+                break;
+            }
+
+            System.out.print("Enter quantity: ");
+            int quantity = scanner.nextInt();
+            scanner.nextLine();
+
+
+            double productPrice = 0;
+            for (int i = 0; i < codes.length; i++) {
+                if (codes[i].equals(productCode)) {
+                    productPrice = prices[i];
+                    break;
+                }
+            }
+
+
+            totalBeforeTax += productPrice * quantity;
+        }
+
+
+        double tax_Rate = 0.17;
+        totalAfterTax = totalBeforeTax * (1 + tax_Rate);
+
+        // Display totals
+        System.out.printf("Total before tax: %.2f Ksh%n", totalBeforeTax);
+        System.out.printf("Total after tax: %.2f Ksh%n", totalAfterTax);
+    }
+}
